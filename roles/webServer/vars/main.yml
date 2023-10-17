@@ -1,0 +1,8 @@
+---
+# vars file for webServer
+
+requiredPackages:
+  - lighttpd
+
+workingDir: '/meu_diretorio_web'
+serverPort: 8080

@@ -1,0 +1,6 @@
+---
+# handlers file for webServer
+- name: "restartServer"
+  service:
+    name: lighttpd
+    state: restarted

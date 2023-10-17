@@ -1,0 +1,32 @@
+---
+# tasks file for webServer
+- name: "Install packages"
+  apt:
+    update_cache: yes
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ requiredPackages }}"
+
+- name: "Create directory"
+  file:
+    path: "{{ workingDir }}"
+    state: "directory"
+
+- name: "Replace default HTML"
+  copy: 
+    src: "files/index.html"
+    dest: "{{ workingDir }}/index.html"
+  notify: restartServer
+
+- name: "Copy config file"
+  template:
+    src: "templates/lighttpd.conf"
+    dest: "/etc/lighttpd/lighttpd.conf"
+  notify: restartServer
+
+- name: "Init service"
+  service:
+    name: lighttpd
+    state: started
+    enabled: yes
+
